@@ -1,10 +1,10 @@
 import * as express from 'express';
 
-import { ApiKeyVerifier } from '../../auth/auth-verifier/api-key-verifier';
-import { BearerTokenVerifier } from '../../auth/auth-verifier/bearer-token-verifier';
-import { AuthEnrichment } from '../../handlers/request';
-import { ApiKeyScopeVerifier } from '../scope-verifier/api-key-scope-verifier';
-import { UserTokenScopeVerifier } from '../scope-verifier/user-token-scope-verifier';
+import { ApiKeyVerifier } from '@local/auth/auth-verifier/api-key-verifier';
+import { BearerTokenVerifier } from '@local/auth/auth-verifier/bearer-token-verifier';
+import { AuthEnrichment } from '@local/handlers/request';
+import { ApiKeyScopeVerifier } from '@local/express/scope-verifier/api-key-scope-verifier';
+import { UserTokenScopeVerifier } from '@local/express/scope-verifier/user-token-scope-verifier';
 
 /**
  * Factory class for creating an authentication middleware, which checks authentication based on different methods
@@ -31,7 +31,6 @@ export class AuthenticationMiddlewareFactory {
 
       try {
         request.token = await scopeVerifier.scopedVerifiedApiKey(apiKeyHeader as string);
-        console.log('test');
       } catch (error) {
         next(error);
         return;

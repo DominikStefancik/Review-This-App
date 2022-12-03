@@ -1,13 +1,7 @@
 import { IRouter, Router } from 'express';
 
-import { Endpoints } from '../../endpoints/endpoint';
-import { ExpressAdapter, ExpressRequestHandler } from '../express-adapter';
-
-export interface Route {
-  root: string;
-  endpoints: Endpoints[];
-  middleware: ExpressRequestHandler[];
-}
+import { ExpressAdapter } from '@local/express/express-adapter';
+import { Route } from '@local/express/routing/route';
 
 /**
  * Factory class creating a router with respective request handlers.

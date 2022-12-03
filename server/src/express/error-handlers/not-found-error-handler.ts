@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { Logger } from 'pino';
 
-import { NotFoundError } from '../http/http-errors';
-import { HttpResponseCode } from '../http/http-response-code';
+import { NotFoundError } from '@local/express/http/http-errors';
+import { HttpResponseCode } from '@local/express/http/http-response-code';
 
 export function notFoundErrorHandler(
   error: NotFoundError,

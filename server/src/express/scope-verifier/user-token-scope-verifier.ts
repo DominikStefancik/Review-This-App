@@ -1,6 +1,6 @@
-import { AuthToken } from '../../auth/auth-token';
-import { BearerTokenVerifier } from '../../auth/auth-verifier/bearer-token-verifier';
-import { AuthenticationError } from '../http/http-errors';
+import { AuthToken } from '@local/auth/auth-token';
+import { BearerTokenVerifier } from '@local/auth/auth-verifier/bearer-token-verifier';
+import { AuthenticationError } from '@local/express/http/http-errors';
 
 /**
  * Class verifying if an app user sending a request is allowed to do so.

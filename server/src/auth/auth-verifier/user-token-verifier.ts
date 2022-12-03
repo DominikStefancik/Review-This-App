@@ -1,7 +1,7 @@
 import { pino } from 'pino';
 
-import { AuthToken } from '../auth-token';
-import { BearerTokenVerifier } from './bearer-token-verifier';
+import { AuthToken } from '@local/auth/auth-token';
+import { BearerTokenVerifier } from '@local/auth/auth-verifier/bearer-token-verifier';
 
 /**
  * Class verifying authorization Bearer token.

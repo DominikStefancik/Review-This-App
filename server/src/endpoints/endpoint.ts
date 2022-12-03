@@ -1,4 +1,4 @@
-import { EndpointHandler } from '../handlers/endpoint-handler';
+import { EndpointHandler } from '@local/handlers/endpoint-handler';
 
 /**
  * Represents a specific endpoint with handlers for requests of a different type (GET, POST, PUT, PATCH, DELETE)

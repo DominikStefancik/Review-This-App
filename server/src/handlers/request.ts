@@ -1,4 +1,4 @@
-import { AuthToken } from '../auth/auth-token';
+import { AuthToken } from '@local/auth/auth-token';
 
 interface QueryParameters {
   [key: string]: string | string[] | QueryParameters | QueryParameters[] | undefined;

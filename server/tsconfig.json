@@ -2,7 +2,13 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./src",
+    "paths": {
+      "@local/auth/*": ["auth/*"],
+      "@local/express/*": ["express/*"],
+      "@local/endpoints/*": ["endpoints/*"],
+      "@local/handlers/*": ["handlers/*"]
+    }
   },
   "include": [
     "src/**/*.ts",

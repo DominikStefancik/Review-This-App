@@ -1,11 +1,16 @@
+// At the very beginning of the index.ts file we need to setup an alias which will be used to avoid using relative paths in imports
+import 'module-alias/register';
+
 import * as express from 'express';
 
-import { ExternalSystemApiVerifier } from './auth/auth-verifier/external-system-api-verifier';
+import { ExternalSystemApiVerifier } from '@local/auth/auth-verifier/external-system-api-verifier';
+import { ExpressAppBuilder } from '@local/express/express-app-builder';
+import { HttpResponseCode } from '@local/express/http/http-response-code';
+import { AuthenticationMiddlewareFactory } from '@local/express/middleware/authentication-middleware-factory';
+import { VersionTag } from '@local/express/routing/routes';
+
 import { MODULE_NAME, PORT } from './constants';
-import { ExpressAppBuilder } from './express/express-app-builder';
-import { HttpResponseCode } from './express/http/http-response-code';
-import { AuthenticationMiddlewareFactory } from './express/middleware/authentication-middleware-factory';
-import { VersionTag } from './express/routing/routes';
+
 import { getLogger } from './logging/logger';
 
 if (!MODULE_NAME || !PORT) {

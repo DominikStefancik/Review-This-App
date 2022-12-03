@@ -1,7 +1,7 @@
 import { pino } from 'pino';
 
-import { AuthToken } from '../auth-token';
-import { ApiKeyVerifier } from './api-key-verifier';
+import { AuthToken } from '@local/auth/auth-token';
+import { ApiKeyVerifier } from '@local/auth/auth-verifier/api-key-verifier';
 
 /**
  * Class verifying API Key from a request header.

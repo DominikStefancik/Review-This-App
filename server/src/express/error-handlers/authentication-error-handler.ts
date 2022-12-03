@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { Logger } from 'pino';
 
-import { AuthenticationError } from '../http/http-errors';
-import { HttpResponseCode } from '../http/http-response-code';
+import { AuthenticationError } from '@local/express/http/http-errors';
+import { HttpResponseCode } from '@local/express/http/http-response-code';
 
 export function authenticationErrorHandler(
   error: AuthenticationError,

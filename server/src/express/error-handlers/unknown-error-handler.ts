@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { Logger } from 'pino';
-import { HttpResponseCode } from '../http/http-response-code';
+
+import { HttpResponseCode } from '@local/express/http/http-response-code';
 
 export function unknownErrorHandler(
   error: Error,

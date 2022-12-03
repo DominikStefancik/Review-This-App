@@ -3,20 +3,21 @@ import * as cors from 'cors';
 import * as express from 'express';
 import { Logger } from 'pino';
 
-import { Endpoints } from '../endpoints/endpoint';
-import { authenticationErrorHandler } from './error-handlers/authentication-error-handler';
-import { authorizationErrorHandler } from './error-handlers/authorization-error-handler';
-import { internalServerErrorHandler } from './error-handlers/internal-server-error-handler';
-import { invalidRequestErrorHandler } from './error-handlers/invalid-request-error-handler';
-import { notFoundErrorHandler } from './error-handlers/not-found-error-handler';
-import { unknownErrorHandler } from './error-handlers/unknown-error-handler';
-import { validationErrorHandler } from './error-handlers/validation-error-handler';
-import { ExpressRequestHandler } from './express-adapter';
-import { NotFoundError } from './http/http-errors';
-import { HttpResponseCode } from './http/http-response-code';
-import { LoggingMiddlewareFactory } from './middleware/logging-middleware-factory';
-import { Route, RouterFactory } from './routing/router-factory';
-import { VersionTag } from './routing/routes';
+import { Endpoints } from '@local/endpoints/endpoint';
+import { authenticationErrorHandler } from '@local/express/error-handlers/authentication-error-handler';
+import { authorizationErrorHandler } from '@local/express/error-handlers/authorization-error-handler';
+import { internalServerErrorHandler } from '@local/express/error-handlers/internal-server-error-handler';
+import { invalidRequestErrorHandler } from '@local/express/error-handlers/invalid-request-error-handler';
+import { notFoundErrorHandler } from '@local/express/error-handlers/not-found-error-handler';
+import { unknownErrorHandler } from '@local/express/error-handlers/unknown-error-handler';
+import { validationErrorHandler } from '@local/express/error-handlers/validation-error-handler';
+import { ExpressRequestHandler } from '@local/express/express-adapter';
+import { NotFoundError } from '@local/express/http/http-errors';
+import { HttpResponseCode } from '@local/express/http/http-response-code';
+import { LoggingMiddlewareFactory } from '@local/express/middleware/logging-middleware-factory';
+import { RouterFactory } from '@local/express/routing/router-factory';
+import { VersionTag } from '@local/express/routing/routes';
+import { Route } from '@local/express/routing/route';
 import urlJoin = require('url-join');
 
 enum Consumer {

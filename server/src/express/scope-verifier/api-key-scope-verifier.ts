@@ -1,6 +1,6 @@
-import { AuthToken } from '../../auth/auth-token';
-import { ApiKeyVerifier } from '../../auth/auth-verifier/api-key-verifier';
-import { AuthenticationError } from '../http/http-errors';
+import { AuthToken } from '@local/auth/auth-token';
+import { ApiKeyVerifier } from '@local/auth/auth-verifier/api-key-verifier';
+import { AuthenticationError } from '@local/express/http/http-errors';
 
 /**
  * Class verifying if a user or system sending a request is allowed to do so.

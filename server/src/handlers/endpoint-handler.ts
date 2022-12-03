@@ -1,7 +1,8 @@
 import { Logger } from 'pino';
-import { AuthToken } from '../auth/auth-token';
-import { Request } from './request';
-import { Response } from './response';
+
+import { AuthToken } from '@local/auth/auth-token';
+import { Request } from '@local/handlers/request';
+import { Response } from '@local/handlers/response';
 
 export interface HandlerResponse<T> {
   code: number;
