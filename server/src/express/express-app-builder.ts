@@ -1,0 +1,207 @@
+import * as cookieParser from 'cookie-parser';
+import * as cors from 'cors';
+import * as express from 'express';
+import { Logger } from 'pino';
+
+import { Endpoints } from '../endpoints/endpoint';
+import { authenticationErrorHandler } from './error-handlers/authentication-error-handler';
+import { authorizationErrorHandler } from './error-handlers/authorization-error-handler';
+import { internalServerErrorHandler } from './error-handlers/internal-server-error-handler';
+import { invalidRequestErrorHandler } from './error-handlers/invalid-request-error-handler';
+import { notFoundErrorHandler } from './error-handlers/not-found-error-handler';
+import { unknownErrorHandler } from './error-handlers/unknown-error-handler';
+import { validationErrorHandler } from './error-handlers/validation-error-handler';
+import { ExpressRequestHandler } from './express-adapter';
+import { NotFoundError } from './http/http-errors';
+import { HttpResponseCode } from './http/http-response-code';
+import { LoggingMiddlewareFactory } from './middleware/logging-middleware-factory';
+import { Route, RouterFactory } from './routing/router-factory';
+import { VersionTag } from './routing/routes';
+import urlJoin = require('url-join');
+
+enum Consumer {
+  public = 'public',
+}
+
+interface EndpointCollection {
+  [consumer: string]: {
+    [prefix: string]: {
+      [versionTag: string]: {
+        endpoints: Endpoints[];
+        middleware: ExpressRequestHandler[];
+      };
+    };
+  };
+}
+
+/**
+ * Class for building an Express app. Sets all routes with respective request handlers, logging middleware and
+ * authentication middleware for verifying an authenticated user in incoming requests.
+ */
+export class ExpressAppBuilder {
+  private readonly loggingMiddlewareFactory: LoggingMiddlewareFactory;
+  private readonly defaultPrefix: { [key in Consumer]: string };
+  private readonly defaultMiddleware: { [key in Consumer]: ExpressRequestHandler[] };
+  private readonly routerFactory: RouterFactory;
+  private readonly endpoints: EndpointCollection;
+
+  public constructor(private readonly logger: Logger) {
+    this.loggingMiddlewareFactory = new LoggingMiddlewareFactory(logger);
+    this.routerFactory = new RouterFactory();
+    this.defaultPrefix = {
+      [Consumer.public]: '',
+    };
+    this.defaultMiddleware = {
+      [Consumer.public]: [],
+    };
+    this.endpoints = {};
+  }
+
+  build(): express.Express {
+    const expressApp = this.createExpressApp();
+
+    this.setupLogging(expressApp);
+    this.setupHealthRoute(expressApp);
+    this.setupContentRoutes(expressApp);
+    this.setupFallbackRoute(expressApp);
+    this.setupErrorHandlers(expressApp);
+
+    return expressApp;
+  }
+
+  private createExpressApp(): express.Express {
+    const expressApp: express.Express = express();
+
+    expressApp.enable('trust proxy');
+    expressApp.use(cors({ origin: true }));
+    expressApp.use(cookieParser());
+    expressApp.use(express.json());
+
+    return expressApp;
+  }
+
+  public withPublicRoute(
+    prefix: string,
+    versionTag: VersionTag,
+    middleware: ExpressRequestHandler[]
+  ): ExpressAppBuilder {
+    return this.withRoute(Consumer.public, prefix, versionTag, middleware);
+  }
+
+  public withPublicRouteEndpoints(prefix: string, versionTag: VersionTag, endpoints: Endpoints) {
+    // A route for these endpoints has to be created before the endpoints are added, otherwise an error is thrown
+    return this.withEndpoints(Consumer.public, prefix, versionTag, endpoints);
+  }
+
+  public withPublicEndpoints(versionTag: VersionTag, endpoints: Endpoints) {
+    const consumer = Consumer.public;
+
+    return this.withDefaultRoute(consumer, versionTag).withEndpoints(
+      consumer,
+      this.defaultPrefix[consumer],
+      versionTag,
+      endpoints
+    );
+  }
+
+  private withDefaultRoute(consumer: Consumer, versionTag: VersionTag): ExpressAppBuilder {
+    const prefix = this.defaultPrefix[consumer];
+    const route = this.endpoints[consumer]?.[prefix]?.[versionTag];
+
+    // the default route is already set
+    if (route) {
+      return this;
+    }
+
+    return this.withRoute(consumer, prefix, versionTag, this.defaultMiddleware[consumer]);
+  }
+
+  private withRoute(
+    consumer: Consumer,
+    prefix: string,
+    versionTag: VersionTag,
+    middleware: ExpressRequestHandler[]
+  ): ExpressAppBuilder {
+    const route = this.endpoints[consumer]?.[prefix]?.[versionTag];
+
+    if (route) {
+      throw new Error(`Route ${consumer} ${prefix} ${versionTag} already created`);
+    }
+
+    this.endpoints[consumer] = this.endpoints[consumer] || {};
+    const consumerEndpoint = this.endpoints[consumer];
+    consumerEndpoint[prefix] = consumerEndpoint[prefix] || {};
+    const prefixEndpoint = consumerEndpoint[prefix];
+    prefixEndpoint[versionTag] = prefixEndpoint[versionTag] || { endpoints: [], middleware };
+
+    return this;
+  }
+
+  private withEndpoints(
+    consumer: Consumer,
+    prefix: string,
+    versionTag: VersionTag,
+    endpoints: Endpoints
+  ) {
+    const route = this.endpoints[consumer]?.[prefix]?.[versionTag];
+
+    if (!route) {
+      throw new Error(`Route ${consumer} ${prefix} ${versionTag} does not exist`);
+    }
+
+    this.validateEndpoints(endpoints);
+    route.endpoints.push(endpoints);
+
+    return this;
+  }
+
+  private validateEndpoints(endpoints: Endpoints): void {
+    Object.keys(endpoints).forEach((endpoint) => {
+      if (endpoint.length > 0 && endpoint[0] !== '/') {
+        throw new Error('Endpoints have to start with a dash');
+      }
+    });
+  }
+
+  private setupContentRoutes(expressApp: express.Express) {
+    Object.entries(this.endpoints).forEach(([consumer, consumerEndpoints]) => {
+      Object.entries(consumerEndpoints).forEach(([prefix, prefixEndpoints]) => {
+        Object.entries(prefixEndpoints).forEach(([versionTag, { endpoints, middleware }]) => {
+          const root = urlJoin('/', consumer, prefix, versionTag);
+          this.setupRoute(expressApp, { root, endpoints, middleware });
+        });
+      });
+    });
+  }
+
+  private setupRoute(expressApp: express.Express, route: Route): void {
+    const router = this.routerFactory.getFor(route);
+    expressApp.use(route.root, router);
+  }
+
+  private setupHealthRoute(expressApp: express.Express): void {
+    expressApp.get('/health', (_request: express.Request, response: express.Response) =>
+      response.status(HttpResponseCode.SUCCESS).json({ message: 'Server is accessible' })
+    );
+  }
+
+  private setupFallbackRoute(expressApp: express.Express): void {
+    expressApp.use('*', (_request: express.Request, _response: express.Response) => {
+      throw new NotFoundError();
+    });
+  }
+
+  private setupLogging(expressApp: express.Express): void {
+    expressApp.use(this.loggingMiddlewareFactory.get());
+  }
+
+  private setupErrorHandlers(expressApp: express.Express): void {
+    expressApp.use(authenticationErrorHandler);
+    expressApp.use(authorizationErrorHandler);
+    expressApp.use(notFoundErrorHandler);
+    expressApp.use(invalidRequestErrorHandler);
+    expressApp.use(validationErrorHandler);
+    expressApp.use(internalServerErrorHandler);
+    expressApp.use(unknownErrorHandler);
+  }
+}
