@@ -2,7 +2,7 @@ import * as express from 'express';
 
 import { ApiKeyVerifier } from '@local/auth/auth-verifier/api-key-verifier';
 import { BearerTokenVerifier } from '@local/auth/auth-verifier/bearer-token-verifier';
-import { AuthEnrichment } from '@local/handlers/request';
+import { AuthEnrichment } from '@local/interfaces/networking/request';
 import { ApiKeyScopeVerifier } from '@local/express/scope-verifier/api-key-scope-verifier';
 import { UserTokenScopeVerifier } from '@local/express/scope-verifier/user-token-scope-verifier';
 

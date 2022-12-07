@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { v4 } from 'uuid';
 
-import { Endpoint } from '@local/endpoints/endpoint';
-import { EndpointHandler } from '@local/handlers/endpoint-handler';
-import { AuthEnrichment } from '@local/handlers/request';
+import { Endpoint } from '@local/interfaces/networking/endpoint';
+import { EndpointHandler } from '@local/interfaces/networking/endpoint-handler';
+import { AuthEnrichment } from '@local/interfaces/networking/request';
 import { LoggerEnrichment } from '@local/express/middleware/logging-middleware-factory';
 
 /**

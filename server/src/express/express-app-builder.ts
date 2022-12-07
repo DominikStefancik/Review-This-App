@@ -3,7 +3,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 import { Logger } from 'pino';
 
-import { Endpoints } from '@local/endpoints/endpoint';
+import { Endpoints } from '@local/interfaces/networking/endpoint';
 import { authenticationErrorHandler } from '@local/express/error-handlers/authentication-error-handler';
 import { authorizationErrorHandler } from '@local/express/error-handlers/authorization-error-handler';
 import { internalServerErrorHandler } from '@local/express/error-handlers/internal-server-error-handler';
@@ -182,7 +182,7 @@ export class ExpressAppBuilder {
 
   private setupHealthRoute(expressApp: express.Express): void {
     expressApp.get('/health', (_request: express.Request, response: express.Response) =>
-      response.status(HttpResponseCode.SUCCESS).json({ message: 'Server is accessible' })
+      response.status(HttpResponseCode.OK).json({ message: 'Server is accessible' })
     );
   }
 

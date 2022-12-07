@@ -2,7 +2,7 @@ import * as express from 'express';
 import { Logger } from 'pino';
 
 import { HttpResponseCode } from '@local/express/http/http-response-code';
-import { ValidationError } from '@local/express/validation-error';
+import { ValidationError } from '@local/domain/errors/validation-error';
 
 export function validationErrorHandler(
   error: ValidationError,

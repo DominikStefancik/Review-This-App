@@ -6,8 +6,9 @@
     "paths": {
       "@local/auth/*": ["auth/*"],
       "@local/express/*": ["express/*"],
-      "@local/endpoints/*": ["endpoints/*"],
-      "@local/handlers/*": ["handlers/*"]
+      "@local/logging/*": ["logging/*"],
+      "@local/interfaces/*": ["interfaces/*"],
+      "@local/domain/*": ["domain/*"]
     }
   },
   "include": [

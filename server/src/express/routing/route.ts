@@ -1,4 +1,4 @@
-import { Endpoints } from '@local/endpoints/endpoint';
+import { Endpoints } from '@local/interfaces/networking/endpoint';
 import { ExpressRequestHandler } from '@local/express/express-adapter';
 
 export interface Route {

@@ -51,7 +51,8 @@
   "_moduleAliases": {
     "@local/auth": "dist/src/auth",
     "@local/express": "dist/src/express",
-    "@local/endpoints": "dist/src/endpoints",
-    "@local/handlers": "dist/src/handlers"
+    "@local/logging": "dist/src/logging",
+    "@local/interfaces": "dist/src/interfaces",
+    "@local/domain": "dist/src/domain"
   }
 }
