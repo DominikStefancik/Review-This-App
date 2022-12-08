@@ -76,6 +76,7 @@ export class ExpressAppBuilder {
     expressApp.enable('trust proxy');
     expressApp.use(cors({ origin: true }));
     expressApp.use(cookieParser());
+    // express.json() is an Express built-in middleware which retrieves data from a request body
     expressApp.use(express.json());
 
     return expressApp;

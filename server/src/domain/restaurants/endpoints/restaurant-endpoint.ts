@@ -16,7 +16,7 @@ export class RestaurantEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantEndpoint getHandler');
 
-    const handler = new RestaurantsHandler();
+    const handler = new RestaurantsHandler(logger);
     const restaurantId = request.urlParameters['id'];
 
     return handler.handleGet(restaurantId);
@@ -29,7 +29,7 @@ export class RestaurantEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantEndpoint putHandler');
 
-    const handler = new RestaurantsHandler();
+    const handler = new RestaurantsHandler(logger);
     const restaurantId = request.urlParameters['id'];
 
     return handler.handlePut(restaurantId, request.body);
@@ -42,7 +42,7 @@ export class RestaurantEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantEndpoint deleteHandler');
 
-    const handler = new RestaurantsHandler();
+    const handler = new RestaurantsHandler(logger);
     const restaurantId = request.urlParameters['id'];
 
     return handler.handleDelete(restaurantId);

@@ -1,1 +1,1 @@
-export const { PORT, MODULE_NAME } = process.env;
+export const { PORT, MODULE_NAME, PGHOST, PGDATABASE, PGPORT } = process.env;

@@ -10,5 +10,5 @@ export interface Restaurant {
   id: string;
   name: string;
   location: string;
-  priceRange: PriceRange;
+  price_range: PriceRange;
 }

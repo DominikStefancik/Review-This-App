@@ -1,8 +1,8 @@
 import { pino } from 'pino';
 
+import { AuthToken } from '@local/auth/auth-token';
 import { Endpoint } from '@local/interfaces/networking/endpoint';
 import { Request } from '@local/interfaces/networking/request';
-import { AuthToken } from '@local/auth/auth-token';
 import { RestaurantsHandler } from '@local/domain/restaurants/restaurants-handler';
 import { Response } from '@local/interfaces/networking/response';
 
@@ -16,10 +16,9 @@ export class RestaurantCollectionEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantCollectionEndpoint getHandler');
 
-    const handler = new RestaurantsHandler();
-    const restaurantId = request.urlParameters['id'];
+    const handler = new RestaurantsHandler(logger);
 
-    return handler.handleGet(restaurantId);
+    return handler.handleGet();
   }
 
   public postHandler(
@@ -29,7 +28,7 @@ export class RestaurantCollectionEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantCollectionEndpoint postHandler');
 
-    const handler = new RestaurantsHandler();
+    const handler = new RestaurantsHandler(logger);
 
     return handler.handlePost(request.body);
   }

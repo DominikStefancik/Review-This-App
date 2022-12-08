@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn run build && yarn run dev",
-    "dev": "MODULE_NAME=$npm_package_name PORT=3000 ts-node-dev --respawn --transpile-only src/index.ts | pino-pretty",
+    "dev": "MODULE_NAME=$npm_package_name PORT=3000 PGHOST=localhost PGDATABASE=review_this PGPORT=5432 ts-node-dev --respawn --transpile-only src/index.ts | pino-pretty",
     "build": "yarn run lint && yarn run compile",
     "rebuild": "yarn run clean && yarn run build",
     "lint": "eslint . --ext .ts",
@@ -28,6 +28,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "pg": "^8.8.0",
     "pino": "^8.5.0",
     "url-join": "^4.0.1",
     "uuid": "^9.0.0"
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/node": "^18.7.18",
+    "@types/pg": "^8.6.5",
     "@types/pino": "^7.0.5",
     "@types/url-join": "^4.0.1",
     "@types/uuid": "^9.0.0",
