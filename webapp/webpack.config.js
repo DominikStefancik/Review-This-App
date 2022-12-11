@@ -18,4 +18,7 @@ module.exports = {
     filename: 'index.bundle.js',
   },
   plugins: [new HtmlWebpackPlugin({ template: path.resolve(__dirname, './src/index.html') })],
+  devServer: {
+    historyApiFallback: true,
+  },
 };
