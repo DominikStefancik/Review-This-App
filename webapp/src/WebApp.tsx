@@ -3,10 +3,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { ROOT, RESTAURANTS, NOT_FOUND, ALL_PLACES } from './routes';
 import PlacesOfInterestPage from './pages/places-of-interest';
-import RestaurantDetailPage from './pages/restaurant/detail';
-import RestaurantUpdatePage from './pages/restaurant/update';
+import RestaurantDetailPage from './pages/restaurant/ui/detail';
+import RestaurantUpdatePage from './pages/restaurant/ui/update';
 import Layout from './pages/components/Layout';
-import RestaurantListPage from './pages/restaurant/list';
+import RestaurantListPage from './pages/restaurant/ui/list';
 
 const WebApp = () => {
   return (

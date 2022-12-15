@@ -1,10 +1,10 @@
-interface PriceRange {
+export interface PriceRangeUI {
   value: number;
   label: string;
   tooltip: string;
 }
 
-export const PRICE_RANGE: { [range: string]: PriceRange } = {
+export const PRICE_RANGE_UI: { [range: string]: PriceRangeUI } = {
   veryLow: {
     value: 1,
     label: '$ (Very Low)',

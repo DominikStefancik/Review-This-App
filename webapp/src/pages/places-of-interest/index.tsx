@@ -1,5 +1,6 @@
 import React from 'react';
-import RestaurantListPage from '../restaurant/list';
+
+import RestaurantListPage from '../restaurant/ui/list';
 
 const PlacesOfInterestPage = () => {
   return (

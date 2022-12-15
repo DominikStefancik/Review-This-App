@@ -11,7 +11,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
-import { PRICE_RANGE } from '../../../../models/price-range';
+import { PRICE_RANGE_UI } from '../../../../places-of-interest/models/ui/price-range';
 
 const AddRestaurantForm = () => {
   const [priceRange, setPriceRange] = React.useState('');
@@ -39,11 +39,15 @@ const AddRestaurantForm = () => {
               value={priceRange}
               onChange={handlePriceChange}
             >
-              <MenuItem value={PRICE_RANGE.veryLow.value}>{PRICE_RANGE.veryLow.label}</MenuItem>
-              <MenuItem value={PRICE_RANGE.low.value}>{PRICE_RANGE.low.label}</MenuItem>
-              <MenuItem value={PRICE_RANGE.medium.value}>{PRICE_RANGE.medium.label}</MenuItem>
-              <MenuItem value={PRICE_RANGE.high.value}>{PRICE_RANGE.high.label}</MenuItem>
-              <MenuItem value={PRICE_RANGE.veryHigh.value}>{PRICE_RANGE.veryHigh.label}</MenuItem>
+              <MenuItem value={PRICE_RANGE_UI.veryLow.value}>
+                {PRICE_RANGE_UI.veryLow.label}
+              </MenuItem>
+              <MenuItem value={PRICE_RANGE_UI.low.value}>{PRICE_RANGE_UI.low.label}</MenuItem>
+              <MenuItem value={PRICE_RANGE_UI.medium.value}>{PRICE_RANGE_UI.medium.label}</MenuItem>
+              <MenuItem value={PRICE_RANGE_UI.high.value}>{PRICE_RANGE_UI.high.label}</MenuItem>
+              <MenuItem value={PRICE_RANGE_UI.veryHigh.value}>
+                {PRICE_RANGE_UI.veryHigh.label}
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
