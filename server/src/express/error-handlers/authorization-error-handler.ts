@@ -16,7 +16,7 @@ export function authorizationErrorHandler(
   }
 
   if (request.logger) {
-    request.logger.warn(`Handling error as ${HttpResponseCode.FORBIDDEN}`, error.json());
+    request.logger.warn(error.json(), `Handling error as ${HttpResponseCode.FORBIDDEN}`);
   }
 
   response

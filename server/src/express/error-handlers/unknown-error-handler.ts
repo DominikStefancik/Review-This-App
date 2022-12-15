@@ -10,11 +10,14 @@ export function unknownErrorHandler(
   _next: express.NextFunction
 ) {
   if (request.logger) {
-    request.logger.warn(`Handling error as ${HttpResponseCode.INTERNAL_SERVER_ERROR}`, {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    });
+    request.logger.warn(
+      {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+      `Handling error as ${HttpResponseCode.INTERNAL_SERVER_ERROR}`
+    );
   }
 
   response

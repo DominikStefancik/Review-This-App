@@ -17,8 +17,8 @@ export function internalServerErrorHandler(
 
   if (request.logger) {
     request.logger.warn(
-      `Handling error as ${HttpResponseCode.INTERNAL_SERVER_ERROR}`,
-      error.json()
+      error.json(),
+      `Handling error as ${HttpResponseCode.INTERNAL_SERVER_ERROR}`
     );
   }
 

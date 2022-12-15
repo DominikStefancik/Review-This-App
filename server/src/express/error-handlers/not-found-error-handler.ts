@@ -16,7 +16,7 @@ export function notFoundErrorHandler(
   }
 
   if (request.logger) {
-    request.logger.warn(`Handling error as ${HttpResponseCode.NOT_FOUND}`, error.json());
+    request.logger.warn(error.json(), `Handling error as ${HttpResponseCode.NOT_FOUND}`);
   }
 
   if (error.responseMessage) {

@@ -16,7 +16,7 @@ export function invalidRequestErrorHandler(
   }
 
   if (request.logger) {
-    request.logger.warn(`Handling error as ${HttpResponseCode.BAD_REQUEST}`, error.json());
+    request.logger.warn(error.json(), `Handling error as ${HttpResponseCode.BAD_REQUEST}`);
   }
 
   if (error.responseMessage) {
