@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import {
   MenuItem,
   Select,
@@ -12,22 +12,57 @@ import {
 } from '@mui/material';
 
 import { PRICE_RANGE_UI } from '../../../../places-of-interest/models/ui/price-range';
+import restaurantSender from '../../../api/restaurant-sender';
+import { RestaurantContext } from '../../../../../context/RestaurantContextProvider';
+import { restaurantMapper } from '../../../restaurant-mapper';
 
 const AddRestaurantForm = () => {
-  const [priceRange, setPriceRange] = React.useState('');
+  // @ts-ignore
+  const { addRestaurant } = useContext(RestaurantContext);
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [priceRange, setPriceRange] = useState('');
 
-  const handlePriceChange = (event: SelectChangeEvent) => {
-    setPriceRange(event.target.value);
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    try {
+      const restaurantData = {
+        name,
+        location,
+        price_range: priceRange,
+      };
+      const response = await restaurantSender.post('/', restaurantData);
+      addRestaurant(restaurantMapper(response.data));
+
+      setName('');
+      setLocation('');
+      setPriceRange('');
+    } catch (error) {}
   };
 
   return (
     <Box component="form" sx={{ flexGrow: 1, marginTop: 10 }}>
       <Grid container spacing={2} columns={10}>
         <Grid item xs={3}>
-          <TextField id="name" label="Name" variant="outlined" fullWidth />
+          <TextField
+            id="name"
+            label="Name"
+            variant="outlined"
+            fullWidth
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
         </Grid>
         <Grid item xs={3}>
-          <TextField id="location" label="Location" variant="outlined" fullWidth />
+          <TextField
+            id="location"
+            label="Location"
+            variant="outlined"
+            fullWidth
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+          />
         </Grid>
         <Grid item xs={3}>
           <FormControl fullWidth>
@@ -37,7 +72,7 @@ const AddRestaurantForm = () => {
               id="price-range"
               label="Price Range"
               value={priceRange}
-              onChange={handlePriceChange}
+              onChange={(event: SelectChangeEvent) => setPriceRange(event.target.value)}
             >
               <MenuItem value={PRICE_RANGE_UI.veryLow.value}>
                 {PRICE_RANGE_UI.veryLow.label}
@@ -52,7 +87,7 @@ const AddRestaurantForm = () => {
           </FormControl>
         </Grid>
         <Grid item xs={1}>
-          <Button variant="contained" size="large" fullWidth>
+          <Button onClick={handleSubmit} variant="contained" size="large" fullWidth>
             Add
           </Button>
         </Grid>

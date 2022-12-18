@@ -46,7 +46,7 @@ const RestaurantTable = () => {
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: 10 }}>
-      <Table sx={{ minWidth: 650 }}>
+      <Table sx={{ minWidth: 650, backgroundColor: '#E8E8E8' }}>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
