@@ -26,6 +26,7 @@ export const restaurantMapper = (restaurant: Restaurant): PlaceOfInterestUI => {
   randomRating = Math.round(randomRating * 10) / 10;
 
   return {
+    id: restaurant.id,
     name: restaurant.name,
     type: PlaceOfInterestType.Restaurant,
     location: restaurant.location,

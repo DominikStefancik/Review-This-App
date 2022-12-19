@@ -44,10 +44,19 @@ const RestaurantTable = () => {
     );
   }, []);
 
+  const handleDelete = async (restaurantId: string) => {
+    try {
+      await restaurantSender.delete(`/${restaurantId}`);
+      setRestaurants(
+        restaurants.filter((restaurant: PlaceOfInterestUI) => restaurant.id !== restaurantId)
+      );
+    } catch (event) {}
+  };
+
   return (
     <TableContainer component={Paper} sx={{ marginTop: 10 }}>
       <Table sx={{ minWidth: 650, backgroundColor: '#E8E8E8' }}>
-        <TableHead>
+        <TableHead sx={{ backgroundColor: '#89CFF0' }}>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="left">Type</TableCell>
@@ -83,7 +92,13 @@ const RestaurantTable = () => {
                   </Button>
                 </TableCell>
                 <TableCell align="left">
-                  <Button variant="contained" size="large" fullWidth color="error">
+                  <Button
+                    onClick={() => handleDelete(restaurant.id)}
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    color="error"
+                  >
                     Delete
                   </Button>
                 </TableCell>
