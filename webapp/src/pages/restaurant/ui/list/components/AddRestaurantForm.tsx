@@ -38,7 +38,9 @@ const AddRestaurantForm = () => {
       setName('');
       setLocation('');
       setPriceRange('');
-    } catch (error) {}
+    } catch (error) {
+      console.error('Error while creating a restaurant', error);
+    }
   };
 
   return (

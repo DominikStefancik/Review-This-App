@@ -50,7 +50,9 @@ const RestaurantTable = () => {
       setRestaurants(
         restaurants.filter((restaurant: PlaceOfInterestUI) => restaurant.id !== restaurantId)
       );
-    } catch (event) {}
+    } catch (error) {
+      console.error(`Error while deleting a restaurant (id=${restaurantId})`, error);
+    }
   };
 
   return (
