@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   TableContainer,
   Paper,
@@ -16,6 +17,7 @@ import restaurantSender from '../../../api/restaurant-sender';
 import { RestaurantContext } from '../../../../../context/RestaurantContextProvider';
 import { restaurantMapper } from '../../../restaurant-mapper';
 import { PlaceOfInterestUI } from '../../../../places-of-interest/models/ui/place-of-interest';
+import { ALL_RESTAURANTS } from '../../../../../routes';
 
 const priceRangeSymbol = '$';
 const stringifyPriceRangeValue = (value: number): string => {
@@ -29,6 +31,7 @@ const getRatingsTooltip = (value: number, votesCount: number) => {
 const RestaurantTable = () => {
   // @ts-ignore
   const { restaurants, setRestaurants } = useContext(RestaurantContext);
+  const navigate = useNavigate();
 
   // an empty array as dependency says that the 'useEffect' function will be run ONLY when the component mounts
   // Note: if there was no dependency, the function would run every time when the component re-renders
@@ -43,6 +46,10 @@ const RestaurantTable = () => {
       console.error('Error while fetching restaurant data', error)
     );
   }, []);
+
+  const handleUpdate = (restaurantId: string) => {
+    navigate(`/${ALL_RESTAURANTS}/${restaurantId}/update`);
+  };
 
   const handleDelete = async (restaurantId: string) => {
     try {
@@ -65,8 +72,8 @@ const RestaurantTable = () => {
             <TableCell align="left">Location</TableCell>
             <TableCell align="left">Price Range</TableCell>
             <TableCell align="left">Ratings</TableCell>
-            <TableCell align="left">Edit</TableCell>
-            <TableCell align="left">Delete</TableCell>
+            <TableCell align="left"></TableCell>
+            <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -89,8 +96,14 @@ const RestaurantTable = () => {
                   </Tooltip>
                 </TableCell>
                 <TableCell align="left">
-                  <Button variant="contained" size="large" fullWidth color="success">
-                    Edit
+                  <Button
+                    onClick={() => handleUpdate(restaurant.id)}
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    color="success"
+                  >
+                    Update
                   </Button>
                 </TableCell>
                 <TableCell align="left">
