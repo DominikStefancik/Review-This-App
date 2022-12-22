@@ -47,11 +47,17 @@ const RestaurantTable = () => {
     );
   }, []);
 
-  const handleUpdate = (restaurantId: string) => {
+  const handleUpdate = (event: any, restaurantId: string) => {
+    // when we click a button, we don't want the event to be propagated up to the table row, so it won't react to it
+    event.stopPropagation();
+
     navigate(`/${ALL_RESTAURANTS}/${restaurantId}/update`);
   };
 
-  const handleDelete = async (restaurantId: string) => {
+  const handleDelete = async (event: any, restaurantId: string) => {
+    // when we click on button, we don't want the event to be propagated up to the table row, so it won't react to it
+    event.stopPropagation();
+
     try {
       await restaurantSender.delete(`/${restaurantId}`);
       setRestaurants(
@@ -60,6 +66,10 @@ const RestaurantTable = () => {
     } catch (error) {
       console.error(`Error while deleting a restaurant (id=${restaurantId})`, error);
     }
+  };
+
+  const handleRowClick = (restaurantId: string) => {
+    navigate(`/${ALL_RESTAURANTS}/${restaurantId}`);
   };
 
   return (
@@ -79,7 +89,14 @@ const RestaurantTable = () => {
         <TableBody>
           {restaurants.map((restaurant: PlaceOfInterestUI, index: number) => {
             return (
-              <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow
+                key={index}
+                sx={{
+                  '&:last-child td, &:last-child th': { border: 0 },
+                  ':hover': { cursor: 'pointer' },
+                }}
+                onClick={(event) => handleRowClick(restaurant.id)}
+              >
                 <TableCell>{restaurant.name}</TableCell>
                 <TableCell align="left">{restaurant.type}</TableCell>
                 <TableCell align="left">{restaurant.location}</TableCell>
@@ -97,7 +114,7 @@ const RestaurantTable = () => {
                 </TableCell>
                 <TableCell align="left">
                   <Button
-                    onClick={() => handleUpdate(restaurant.id)}
+                    onClick={(event) => handleUpdate(event, restaurant.id)}
                     variant="contained"
                     size="large"
                     fullWidth
@@ -108,7 +125,7 @@ const RestaurantTable = () => {
                 </TableCell>
                 <TableCell align="left">
                   <Button
-                    onClick={() => handleDelete(restaurant.id)}
+                    onClick={(event) => handleDelete(event, restaurant.id)}
                     variant="contained"
                     size="large"
                     fullWidth
