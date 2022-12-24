@@ -23,12 +23,5 @@ export const restaurantTableTheme = createTheme({
         }),
       },
     },
-    MuiRating: {
-      styleOverrides: {
-        icon: () => ({
-          color: '#faaf00',
-        }),
-      },
-    },
   },
 });

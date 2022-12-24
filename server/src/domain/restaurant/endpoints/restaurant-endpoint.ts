@@ -3,7 +3,7 @@ import { pino } from 'pino';
 import { Endpoint } from '@local/interfaces/networking/endpoint';
 import { Request } from '@local/interfaces/networking/request';
 import { AuthToken } from '@local/auth/auth-token';
-import { RestaurantsHandler } from '@local/domain/restaurants/restaurants-handler';
+import { RestaurantsHandler } from '@local/domain/restaurant/restaurants-handler';
 import { Response } from '@local/interfaces/networking/response';
 
 export class RestaurantEndpoint implements Endpoint {

@@ -9,7 +9,6 @@ import {
   TableCell,
   TableBody,
   Button,
-  Rating,
   Tooltip,
   ThemeProvider,
 } from '@mui/material';
@@ -20,6 +19,8 @@ import { restaurantMapper } from '../../../restaurant-mapper';
 import { PlaceOfInterestUI } from '../../../../places-of-interest/models/ui/place-of-interest';
 import { ALL_RESTAURANTS } from '../../../../../routes';
 import { restaurantTableTheme } from '../styles';
+import { StarRating } from '../../../../components/StarRating';
+import { Restaurant } from '../../../models/domain/restaurant';
 
 const priceRangeSymbol = '$';
 const stringifyPriceRangeValue = (value: number): string => {
@@ -40,7 +41,8 @@ const RestaurantTable = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       const response = await restaurantSender.get('/');
-      const transformedData = response.data.map(restaurantMapper);
+      const restaurantsData = response.data.restaurants as Restaurant[];
+      const transformedData = restaurantsData.map(restaurantMapper);
       setRestaurants(transformedData);
     };
 
@@ -111,13 +113,17 @@ const RestaurantTable = () => {
                   <TableCell align="left">
                     <Tooltip title={getRatingsTooltip(restaurant.ratings, 4)}>
                       <span>
-                        <Rating name="rating" value={restaurant.ratings} precision={0.1} readOnly />
+                        <StarRating rating={restaurant.ratings} voteCounts={3} />
                       </span>
                     </Tooltip>
                   </TableCell>
                   <TableCell align="left">
                     <Button
-                      sx={{ color: '#303030', backgroundColor: '#FFBF00' }}
+                      sx={{
+                        'color': '#303030',
+                        'backgroundColor': '#FFBF00',
+                        ':hover': { backgroundColor: '#FFFFFF' },
+                      }}
                       onClick={(event) => handleUpdate(event, restaurant.id)}
                       variant="contained"
                       size="large"
@@ -128,7 +134,10 @@ const RestaurantTable = () => {
                   </TableCell>
                   <TableCell align="left">
                     <Button
-                      sx={{ backgroundColor: '#DC1C13' }}
+                      sx={{
+                        'backgroundColor': '#DC1C13',
+                        ':hover': { backgroundColor: '#FFFFFF' },
+                      }}
                       onClick={(event) => handleDelete(event, restaurant.id)}
                       variant="contained"
                       size="large"

@@ -4,8 +4,8 @@ import 'module-alias/register';
 import * as express from 'express';
 
 import { ExternalSystemApiVerifier } from '@local/auth/auth-verifier/external-system-api-verifier';
-import { RestaurantCollectionEndpoint } from '@local/domain/restaurants/endpoints/restaurant-collection-endpoint';
-import { RestaurantEndpoint } from '@local/domain/restaurants/endpoints/restaurant-endpoint';
+import { RestaurantCollectionEndpoint } from '@local/domain/restaurant/endpoints/restaurant-collection-endpoint';
+import { RestaurantEndpoint } from '@local/domain/restaurant/endpoints/restaurant-endpoint';
 import { ExpressAppBuilder } from '@local/express/express-app-builder';
 import { AuthenticationMiddlewareFactory } from '@local/express/middleware/authentication-middleware-factory';
 import { VersionTag } from '@local/express/routing/routes';

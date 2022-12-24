@@ -5,6 +5,7 @@ import restaurantSender from '../../api/restaurant-sender';
 import { restaurantMapper } from '../../restaurant-mapper';
 import { PlaceOfInterestUI } from '../../../places-of-interest/models/ui/place-of-interest';
 import UpdateRestaurantForm from './components/UpdateRestaurantForm';
+import { Restaurant } from '../../models/domain/restaurant';
 
 const RestaurantUpdatePage = () => {
   const { id } = useParams();
@@ -20,7 +21,8 @@ const RestaurantUpdatePage = () => {
         throw Error('Data received from the server is null');
       }
 
-      setRestaurant(restaurantMapper(response.data));
+      const restaurantData = response.data.restaurants[0] as Restaurant;
+      setRestaurant(restaurantMapper(restaurantData));
     };
 
     fetchRestaurant().catch((error: Error) =>
