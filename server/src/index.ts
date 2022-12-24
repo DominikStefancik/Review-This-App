@@ -11,6 +11,7 @@ import { AuthenticationMiddlewareFactory } from '@local/express/middleware/authe
 import { VersionTag } from '@local/express/routing/routes';
 import { MODULE_NAME, PORT } from './constants';
 import { getLogger } from './logging/logger';
+import { ReviewCollectionEndpoint } from '@local/domain/review/review-collection-endpoint';
 
 if (!MODULE_NAME || !PORT) {
   throw new Error('Required environments variables are not set');
@@ -27,6 +28,7 @@ const app: express.Express = new ExpressAppBuilder(logger)
   .withPublicRouteEndpoints('api', VersionTag.v1, {
     [RestaurantEndpoint.PATH]: new RestaurantEndpoint(),
     [RestaurantCollectionEndpoint.PATH]: new RestaurantCollectionEndpoint(),
+    [ReviewCollectionEndpoint.PATH]: new ReviewCollectionEndpoint(),
   })
   .build();
 
