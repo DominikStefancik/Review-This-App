@@ -4,4 +4,5 @@ export interface Review {
   username: string;
   content: string;
   rating: number;
+  created_at: Date;
 }

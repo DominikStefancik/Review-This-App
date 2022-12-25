@@ -26,9 +26,9 @@ const app: express.Express = new ExpressAppBuilder(logger)
     authenticationMiddlewareFactory.getForApiKey(externalSystemVerifier),
   ])
   .withPublicRouteEndpoints('api', VersionTag.v1, {
+    [ReviewCollectionEndpoint.PATH]: new ReviewCollectionEndpoint(),
     [RestaurantEndpoint.PATH]: new RestaurantEndpoint(),
     [RestaurantCollectionEndpoint.PATH]: new RestaurantCollectionEndpoint(),
-    [ReviewCollectionEndpoint.PATH]: new ReviewCollectionEndpoint(),
   })
   .build();
 

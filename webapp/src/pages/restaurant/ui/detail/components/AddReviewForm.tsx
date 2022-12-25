@@ -12,8 +12,10 @@ import {
   Button,
   TextareaAutosize,
 } from '@mui/material';
+
 import { ROOT, ALL_RESTAURANTS } from '../../../../../routes';
 import { PRICE_RANGE_UI } from '../../../../places-of-interest/models/ui/price-range';
+import restaurantSender from '../../../api/restaurant-sender';
 
 interface UpdateRestaurantFormProps {
   restaurantId: string;
@@ -34,9 +36,10 @@ const AddReviewForm = ({ restaurantId }: UpdateRestaurantFormProps) => {
         rating,
       };
 
+      await restaurantSender.post(`/${restaurantId}/reviews`, reviewData);
       navigate(`${ROOT}${ALL_RESTAURANTS}`);
     } catch (error) {
-      console.error('Error while creating a restaurant', error);
+      console.error('Error while creating a review', error);
     }
   };
 
@@ -83,7 +86,19 @@ const AddReviewForm = ({ restaurantId }: UpdateRestaurantFormProps) => {
             placeholder="Add review here"
             value={content}
             onChange={(event) => setContent(event.target.value)}
-            style={{ width: '100%', minWidth: '100%', maxWidth: '100%', marginRight: '3px' }}
+            style={{
+              boxSizing: 'border-box',
+              width: '100%',
+              minWidth: '100%',
+              maxWidth: '100%',
+              borderColor: '#C0C0C0',
+              borderRadius: '4px',
+              padding: '16.5px',
+              marginRight: '4px',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
+              fontWeight: 400,
+              fontSize: '1rem',
+            }}
           />
         </Grid>
 

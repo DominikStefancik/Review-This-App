@@ -9,6 +9,8 @@ import { ReviewList } from '../../../components/review/ReviewList';
 import AddReviewForm from './components/AddReviewForm';
 import { Review } from '../../../components/models/domain/review';
 
+const MAX_REVIEWS_COUNT = 6;
+
 const RestaurantDetailPage = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState<PlaceOfInterestUI>();
@@ -27,7 +29,7 @@ const RestaurantDetailPage = () => {
       const restaurantData = response.data.restaurants[0] as Restaurant;
       const reviewsData = response.data.reviews as Review[];
       setRestaurant(restaurantMapper(restaurantData));
-      setReviews(reviewsData);
+      setReviews(reviewsData.slice(0, MAX_REVIEWS_COUNT));
     };
 
     fetchRestaurant().catch((error: Error) =>

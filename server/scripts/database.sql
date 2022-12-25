@@ -22,7 +22,8 @@ CREATE TABLE review (
     restaurant_id BIGINT NOT NULL REFERENCES restaurant(id),
     username VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
-    rating INT NOT NULL CHECK(rating >= 1 and rating <= 5)
+    rating INT NOT NULL CHECK(rating >= 1 and rating <= 5),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO review (restaurant_id, username, content, rating) VALUES (1, 'Kate', 'It was awesome', 4);
