@@ -5,6 +5,8 @@ import { Request } from '@local/interfaces/networking/request';
 import { AuthToken } from '@local/auth/auth-token';
 import { RestaurantsHandler } from '@local/domain/restaurant/restaurants-handler';
 import { Response } from '@local/interfaces/networking/response';
+import { RestaurantRepository } from '@local/domain/restaurant/database/repository';
+import { ReviewRepository } from '@local/domain/review/database/repository';
 
 export class RestaurantEndpoint implements Endpoint {
   public static readonly PATH = '/restaurants/:id';
@@ -16,7 +18,11 @@ export class RestaurantEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantEndpoint getHandler');
 
-    const handler = new RestaurantsHandler(logger);
+    const repositories = {
+      restaurant: new RestaurantRepository(logger),
+      review: new ReviewRepository(logger),
+    };
+    const handler = new RestaurantsHandler(repositories, logger);
     const restaurantId = request.urlParameters['id'];
 
     return handler.handleGet(restaurantId);
@@ -29,7 +35,10 @@ export class RestaurantEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantEndpoint putHandler');
 
-    const handler = new RestaurantsHandler(logger);
+    const repositories = {
+      restaurant: new RestaurantRepository(logger),
+    };
+    const handler = new RestaurantsHandler(repositories, logger);
     const restaurantId = request.urlParameters['id'];
 
     return handler.handlePut(restaurantId, request.body);
@@ -42,7 +51,11 @@ export class RestaurantEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantEndpoint deleteHandler');
 
-    const handler = new RestaurantsHandler(logger);
+    const repositories = {
+      restaurant: new RestaurantRepository(logger),
+      review: new ReviewRepository(logger),
+    };
+    const handler = new RestaurantsHandler(repositories, logger);
     const restaurantId = request.urlParameters['id'];
 
     return handler.handleDelete(restaurantId);

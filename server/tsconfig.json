@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "rootDir": ".",
     "outDir": "dist",
     "baseUrl": "./src",
     "paths": {
       "@local/auth/*": ["auth/*"],
+      "@local/database/*": ["database/*"],
+      "@local/domain/*": ["domain/*"],
       "@local/express/*": ["express/*"],
-      "@local/logging/*": ["logging/*"],
       "@local/interfaces/*": ["interfaces/*"],
-      "@local/domain/*": ["domain/*"]
+      "@local/logging/*": ["logging/*"]
     }
   },
   "include": [

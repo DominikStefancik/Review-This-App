@@ -52,9 +52,10 @@
   },
   "_moduleAliases": {
     "@local/auth": "dist/src/auth",
+    "@local/database": "dist/src/database",
+    "@local/domain": "dist/src/domain",
     "@local/express": "dist/src/express",
-    "@local/logging": "dist/src/logging",
     "@local/interfaces": "dist/src/interfaces",
-    "@local/domain": "dist/src/domain"
+    "@local/logging": "dist/src/logging"
   }
 }

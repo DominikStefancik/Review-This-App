@@ -5,6 +5,7 @@ import { Endpoint } from '@local/interfaces/networking/endpoint';
 import { Request } from '@local/interfaces/networking/request';
 import { RestaurantsHandler } from '@local/domain/restaurant/restaurants-handler';
 import { Response } from '@local/interfaces/networking/response';
+import { RestaurantRepository } from '@local/domain/restaurant/database/repository';
 
 export class RestaurantCollectionEndpoint implements Endpoint {
   public static readonly PATH = '/restaurants';
@@ -16,7 +17,10 @@ export class RestaurantCollectionEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantCollectionEndpoint getHandler');
 
-    const handler = new RestaurantsHandler(logger);
+    const repositories = {
+      restaurant: new RestaurantRepository(logger),
+    };
+    const handler = new RestaurantsHandler(repositories, logger);
 
     return handler.handleGet();
   }
@@ -28,7 +32,10 @@ export class RestaurantCollectionEndpoint implements Endpoint {
   ): Promise<Response> {
     logger.info({ request }, 'RestaurantCollectionEndpoint postHandler');
 
-    const handler = new RestaurantsHandler(logger);
+    const repositories = {
+      restaurant: new RestaurantRepository(logger),
+    };
+    const handler = new RestaurantsHandler(repositories, logger);
 
     return handler.handlePost(request.body);
   }

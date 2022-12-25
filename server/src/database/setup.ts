@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+
 import { PGDATABASE, PGHOST, PGPORT } from '../constants';
 
 // connects to a PostgreSQL database
