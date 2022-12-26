@@ -107,7 +107,7 @@ const RestaurantTable = () => {
                       <span>{stringifyPriceRangeValue(restaurant.priceRange.value)}</span>
                     </Tooltip>
                   </TableCell>
-                  <TableCell align="left" sx={{ color: '#faaf00' }}>
+                  <TableCell align="left" sx={{ color: '#FAAF00' }}>
                     {restaurant.averageRating && restaurant.reviewCount ? (
                       <Tooltip
                         title={getRatingsTooltip(restaurant.averageRating, restaurant.reviewCount)}
@@ -128,7 +128,7 @@ const RestaurantTable = () => {
                       sx={{
                         'color': '#303030',
                         'backgroundColor': '#FFBF00',
-                        ':hover': { backgroundColor: '#FFFFFF' },
+                        ':hover': { backgroundColor: '#F8DE7E' },
                       }}
                       onClick={(event) => handleUpdate(event, restaurant.id)}
                       variant="contained"
@@ -141,8 +141,8 @@ const RestaurantTable = () => {
                   <TableCell align="left">
                     <Button
                       sx={{
-                        'backgroundColor': '#DC1C13',
-                        ':hover': { backgroundColor: '#FFFFFF' },
+                        'backgroundColor': '#E32636',
+                        ':hover': { backgroundColor: '#E46B71' },
                       }}
                       onClick={(event) => handleDelete(event, restaurant.id)}
                       variant="contained"
