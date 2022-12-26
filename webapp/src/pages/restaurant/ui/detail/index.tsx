@@ -8,6 +8,9 @@ import { Restaurant } from '../../models/domain/restaurant';
 import { ReviewList } from '../../../components/review/ReviewList';
 import AddReviewForm from './components/AddReviewForm';
 import { Review } from '../../../components/models/domain/review';
+import { StarRating } from '../../../components/StarRating';
+import { Tooltip } from '@mui/material';
+import { getRatingsTooltip } from '../../../components/helpers';
 
 const MAX_REVIEWS_COUNT = 6;
 
@@ -39,10 +42,22 @@ const RestaurantDetailPage = () => {
 
   return (
     <>
-      {restaurant && reviews && (
+      {restaurant && (
         <div>
-          <h1>Restaurant {restaurant.name}</h1>
-          <ReviewList reviews={reviews} />
+          <h1 style={{ textAlign: 'center' }}>Restaurant {restaurant.name}</h1>
+          <div style={{ textAlign: 'center' }}>
+            <Tooltip
+              title={getRatingsTooltip(restaurant.averageRating ?? 0, restaurant.reviewCount ?? 0)}
+            >
+              <span>
+                <StarRating
+                  rating={restaurant.averageRating ?? 0}
+                  reviewCount={restaurant.reviewCount ?? 0}
+                />
+              </span>
+            </Tooltip>
+          </div>
+          {reviews && <ReviewList reviews={reviews} />}
           <AddReviewForm restaurantId={restaurant.id} />
         </div>
       )}

@@ -12,4 +12,6 @@ export interface Restaurant {
   name: string;
   location: string;
   price_range: PriceRange;
+  review_count: number | null;
+  average_rating: number | null;
 }

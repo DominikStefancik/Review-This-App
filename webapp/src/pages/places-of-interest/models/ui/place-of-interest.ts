@@ -7,5 +7,6 @@ export interface PlaceOfInterestUI {
   type: PlaceOfInterestType;
   location: string;
   priceRange: PriceRangeUI;
-  ratings: number;
+  reviewCount: number | null;
+  averageRating: number | null;
 }

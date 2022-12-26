@@ -20,17 +20,13 @@ const getPriceRange = (priceRange: PriceRange) => {
 
 // maps a domain restaurant (from DB) to an object for UI rendering
 export const restaurantMapper = (restaurant: Restaurant): PlaceOfInterestUI => {
-  // generates number real number between 0 and 5
-  let randomRating = Math.random() * (5 - 0) + 0;
-  // rounds number to 1 decimal place
-  randomRating = Math.round(randomRating * 10) / 10;
-
   return {
     id: restaurant.id,
     name: restaurant.name,
     type: PlaceOfInterestType.Restaurant,
     location: restaurant.location,
     priceRange: getPriceRange(restaurant.price_range),
-    ratings: randomRating,
+    reviewCount: restaurant.review_count,
+    averageRating: restaurant.average_rating,
   };
 };

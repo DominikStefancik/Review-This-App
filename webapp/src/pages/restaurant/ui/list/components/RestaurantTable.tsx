@@ -21,14 +21,11 @@ import { ALL_RESTAURANTS } from '../../../../../routes';
 import { restaurantTableTheme } from '../styles';
 import { StarRating } from '../../../../components/StarRating';
 import { Restaurant } from '../../../models/domain/restaurant';
+import { getRatingsTooltip } from '../../../../components/helpers';
 
 const priceRangeSymbol = '$';
 const stringifyPriceRangeValue = (value: number): string => {
   return priceRangeSymbol.padStart(value, priceRangeSymbol);
-};
-
-const getRatingsTooltip = (value: number, votesCount: number) => {
-  return `${value} out of 5 (${votesCount} votes)`;
 };
 
 const RestaurantTable = () => {
@@ -110,12 +107,21 @@ const RestaurantTable = () => {
                       <span>{stringifyPriceRangeValue(restaurant.priceRange.value)}</span>
                     </Tooltip>
                   </TableCell>
-                  <TableCell align="left">
-                    <Tooltip title={getRatingsTooltip(restaurant.ratings, 4)}>
-                      <span>
-                        <StarRating rating={restaurant.ratings} voteCounts={3} />
-                      </span>
-                    </Tooltip>
+                  <TableCell align="left" sx={{ color: '#faaf00' }}>
+                    {restaurant.averageRating && restaurant.reviewCount ? (
+                      <Tooltip
+                        title={getRatingsTooltip(restaurant.averageRating, restaurant.reviewCount)}
+                      >
+                        <span>
+                          <StarRating
+                            rating={restaurant.averageRating}
+                            reviewCount={restaurant.reviewCount}
+                          />
+                        </span>
+                      </Tooltip>
+                    ) : (
+                      '0 reviews'
+                    )}
                   </TableCell>
                   <TableCell align="left">
                     <Button

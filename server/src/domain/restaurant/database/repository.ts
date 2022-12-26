@@ -2,8 +2,8 @@ import { pino } from 'pino';
 
 import { Restaurant } from '@local/domain/restaurant/restaurant-model';
 import {
-  SELECT_ALL_RESTAURANTS,
-  SELECT_RESTAURANT_BY_ID,
+  SELECT_RESTAURANT_BY_ID_WITH_REVIEW_STATISTICS,
+  SELECT_ALL_RESTAURANTS_WITH_REVIEW_STATISTICS,
 } from '@local/domain/restaurant/database/queries';
 import {
   DELETE_ONE_RESTAURANT,
@@ -20,7 +20,7 @@ export class RestaurantRepository {
   public async getAll(): Promise<Restaurant[]> {
     this.logger.info('Fetching all restaurants from the database...');
 
-    const queryResult = await this.database.query(SELECT_ALL_RESTAURANTS);
+    const queryResult = await this.database.query(SELECT_ALL_RESTAURANTS_WITH_REVIEW_STATISTICS);
 
     return queryResult.rows as Restaurant[];
   }
@@ -28,7 +28,9 @@ export class RestaurantRepository {
   public async getOne(id: string): Promise<Restaurant> {
     this.logger.info({ id }, 'Fetching one restaurant from the database...');
 
-    const queryResult = await this.database.query(SELECT_RESTAURANT_BY_ID, [id]);
+    const queryResult = await this.database.query(SELECT_RESTAURANT_BY_ID_WITH_REVIEW_STATISTICS, [
+      id,
+    ]);
 
     return queryResult.rows[0] as Restaurant;
   }
