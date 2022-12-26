@@ -65,6 +65,8 @@ export class RestaurantsHandler {
   public async handleDelete(id: string): Promise<HandlerResponse<any>> {
     this.logger.info({ id }, 'Handling DELETE request...');
 
+    // first we have to delete all reviews referencing the restaurant
+    await this.reviewRepository.deleteAllWithForeignKey(id);
     await this.restaurantRepository.deleteOne(id);
 
     return {
